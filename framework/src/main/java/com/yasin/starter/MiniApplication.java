@@ -1,7 +1,10 @@
 package com.yasin.starter;
 
+import com.yasin.core.ClassScanner;
+import com.yasin.web.handler.HandlerManager;
 import com.yasin.web.server.TomcatServer;
-import org.apache.catalina.LifecycleException;
+
+import java.util.List;
 
 /**
  * @author yasin
@@ -13,7 +16,10 @@ public class MiniApplication {
         TomcatServer tomcatServer = new TomcatServer(args);
         try {
             tomcatServer.startServer();
-        } catch (LifecycleException e) {
+            List<Class<?>> classList = ClassScanner.scanClasses(cls.getPackage().getName());
+            HandlerManager.resolveMappingHandler(classList);
+            classList.forEach(it -> System.out.println(it.getName()));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -2,7 +2,7 @@
 .gradle
 /build/
 /framework/build/
-/test/build/
+/testApp/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting

@@ -1,12 +1,15 @@
 package com.yasin.web.servlet;
 
+import com.yasin.web.handler.HandlerManager;
+import com.yasin.web.handler.MappingHandler;
+
 import javax.servlet.*;
 import java.io.IOException;
 
 /**
  * @author Yasin Zhang
  */
-public class TestServlet implements Servlet {
+public class DispatcherServlet implements Servlet {
 
 
     @Override
@@ -21,7 +24,15 @@ public class TestServlet implements Servlet {
 
     @Override
     public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
-        res.getWriter().println("test");
+        for (MappingHandler mappingHandler : HandlerManager.mappingHandlerList) {
+            try {
+                if (mappingHandler.handle(req, res)) {
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
