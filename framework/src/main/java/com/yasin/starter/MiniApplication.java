@@ -1,5 +1,6 @@
 package com.yasin.starter;
 
+import com.yasin.beans.BeanFactory;
 import com.yasin.core.ClassScanner;
 import com.yasin.web.handler.HandlerManager;
 import com.yasin.web.server.TomcatServer;
@@ -17,6 +18,7 @@ public class MiniApplication {
         try {
             tomcatServer.startServer();
             List<Class<?>> classList = ClassScanner.scanClasses(cls.getPackage().getName());
+            BeanFactory.initBean(classList);
             HandlerManager.resolveMappingHandler(classList);
             classList.forEach(it -> System.out.println(it.getName()));
         } catch (Exception e) {

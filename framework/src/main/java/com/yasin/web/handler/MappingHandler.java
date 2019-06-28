@@ -1,5 +1,7 @@
 package com.yasin.web.handler;
 
+import com.yasin.beans.BeanFactory;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +39,7 @@ public class MappingHandler {
             parameters[i] = req.getParameter(args[i]);
         }
 
-        Object ctrl = controller.newInstance();
+        Object ctrl = BeanFactory.getBean(controller);
         Object response = method.invoke(ctrl, parameters);  // 调用函数
         res.getWriter().println(response.toString());
 
